@@ -23,6 +23,7 @@ sudo pacman -S \
     pulsemixer \
     picom \
     shellcheck \
+    ctags \
     python-pip \
     awesome-terminal-fonts \
     curl #just in case

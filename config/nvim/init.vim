@@ -14,6 +14,7 @@ set nobackup
 set undodir=~/.config/nvim/undodir
 set undofile
 set t_Co=256
+set noshowmode
 
 set colorcolumn=120
 highlight ColorColumn ctermbg=0 guibg=lightgrey
@@ -25,7 +26,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
 
-set backspace=indent,eol,start
+set backspace=2
 let mapleader=" "
 set hidden
 set hlsearch
@@ -49,7 +50,6 @@ if !filereadable(vimplug_exists)
     echo ""
     silent exec "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim"
     let g:not_finish_vimplug = "yes"
-    
     autocmd VimEnter * PlugInstall
 endif
 
@@ -67,6 +67,7 @@ Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'itchyny/lightline.vim'
+Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'mbbill/undotree'
 
@@ -80,20 +81,31 @@ Plug 'tpope/vim-haml'
 Plug 'mattn/emmet-vim'
 call plug#end()
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colors
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 colorscheme gruvbox
 set background=dark
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ripgrep
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 if executable('rg')
     let g:rg_derive_root='true'
 endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" CtrlP
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:netrw_browse_split=2
 let g:netrw_banner = 0
 let g:netrw_winsize = 25
-
 let g:ctrlp_use_caching = 0
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
@@ -104,16 +116,36 @@ nnoremap <Leader>ps :Rg<SPACE>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 " YCM
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
 nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 
-"Netrw
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Netrw
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_winsize = 20
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
 
-"Fix Trailing whitespaces
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" LightLine
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" Fix Trailing whitespaces
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 command! FixWhitespace :%s/\s\+$//e
