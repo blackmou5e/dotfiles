@@ -1,21 +1,46 @@
-#!/usr/bin/env bash
+#!/usr/env bash
 
-# Installing python3, neovim, tmux
-apt install python3 python3-dev python3-pip neovim tmux cmake build-essentials git
-pip3 install pynvim pylint black
+#Update
+sudo pacman -Suy
 
-#Installing vim-plug
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+#install software from default repos
+sudo pacman -S \
+    xorg \
+    xorg-server \
+    xorg-init \
+    xf86-video-nouveau \
+    bspwm \
+    sxhkd \
+    alacritty \
+    neovim \
+    tmux \
+    htop \
+    newsboat \
+    git \
+    ranger \
+    feh \
+    pulseaudio \
+    pulsemixer \
+    picom \
+    shellcheck \
+    python-pip \
+    awesome-terminal-fonts \
+    curl #just in case
 
-# moving configs
-$VIM_HOME=$HOME/.config/nvim
-mkdir -p $VIM_HOME
-cp init.vim $VIM_HOME/init.vim
-cp tmux.conf $HOME/.tmux.conf
+#Install AUR helper
+mkdir "${HOME}"/tmp && \
+    cd "${HOME}"/tmp && \
+    git clone https://aur.archlinux.org/yay.git . && \
+    makepkg -si && \
+    cd "${HOME}" && \
+    rm -r "${HOME}"/tmp
 
-#Install plugins to vim
-nvim +PlugInstall +q +q
+#Install AUR software
+yay -S polybar ttf-nerd-fonts-hack-complete-git
 
-#Compile YCM
-# need to be done
+#Install configs
+git clone https://github.com/blackmou5e/dotfiles.git
+ln -s "${HOME}"/dotfiles/.Xresources "${HOME}"/.Xresources
+ln -s "${HOME}"/dotfiles/config/* "${HOME}"/.config/
+
+exit 0
