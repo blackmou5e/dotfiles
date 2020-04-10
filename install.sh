@@ -43,4 +43,6 @@ git clone https://github.com/blackmou5e/dotfiles.git
 ln -s "${HOME}"/dotfiles/.Xresources "${HOME}"/.Xresources
 ln -s "${HOME}"/dotfiles/config/* "${HOME}"/.config/
 
+nvim && ./"${HOME}"/.config/nvim/plugged/YouCompleteMe/install.py
+
 exit 0
