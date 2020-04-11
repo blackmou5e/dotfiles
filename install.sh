@@ -26,6 +26,7 @@ sudo pacman -S \
     ctags \
     python-pip \
     awesome-terminal-fonts \
+    go \
     curl #just in case
 
 #Install AUR helper
@@ -44,6 +45,6 @@ git clone https://github.com/blackmou5e/dotfiles.git
 ln -s "${HOME}"/dotfiles/.Xresources "${HOME}"/.Xresources
 ln -s "${HOME}"/dotfiles/config/* "${HOME}"/.config/
 
-nvim && ./"${HOME}"/.config/nvim/plugged/YouCompleteMe/install.py
+nvim && ./"${HOME}"/.config/nvim/plugged/YouCompleteMe/install.py --clang-completion --go-completion
 
 exit 0

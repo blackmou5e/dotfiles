@@ -27,7 +27,6 @@ set fileencoding=utf-8
 set fileencodings=utf-8
 
 set backspace=2
-let mapleader=" "
 set hidden
 set hlsearch
 set incsearch
@@ -63,17 +62,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-utils/vim-man'
 Plug 'lyuts/vim-rtags'
 Plug 'ycm-core/YouCompleteMe'
-Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'mbbill/undotree'
+Plug 'majutsushi/tagbar'
+Plug 'w0rp/ale'
+Plug 'yggdroot/indentline'
 
-Plug 'fatih/vim-go', {'do': ':GoInstallBinaries', 'for': 'go'}
+Plug 'fatih/vim-go'
 Plug 'arnaud-lb/vim-php-namespace'
-
 Plug 'stanangeloff/php.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
@@ -106,6 +106,7 @@ let g:ctrlp_use_caching = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " Mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader=" "
 nnoremap <leader>h :wincmd h<CR>
 nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
@@ -121,6 +122,8 @@ nnoremap <silent> <Leader>- :vertical resize -5<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
 nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " Netrw
@@ -135,15 +138,16 @@ autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype
 " LightLine
 """""""""""""""""""""""""""""""""""""""""""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
-      \ },
-      \ }
+            \ 'colorscheme': 'gruvbox',
+            \ 'active': {
+            \   'left': [ ['mode', 'paste'],
+            \               [ 'gitbranch','readonly', 'filename', 'modified'],
+            \           ],
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'FugitiveHead'
+            \ },
+            \}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
 " Fix Trailing whitespaces
