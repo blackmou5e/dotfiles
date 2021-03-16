@@ -195,6 +195,7 @@ alias l='ls -CF'
 alias ga="git add --all"
 alias gc="git commit -m"
 alias gp="git push"
+alias gs="git status"
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
