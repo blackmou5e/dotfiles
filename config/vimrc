@@ -1,0 +1,88 @@
+"Basic settings
+set nocompatible
+syntax enable
+set noerrorbells
+set nowrap
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set t_Co=256
+set noshowmode
+set nu
+set colorcolumn=120
+highlight CursorColumn ctermbg=0 guibg=lightgrey
+set cursorline
+hi cursorline cterm=none term=none
+highlight CursorLine ctermbg=234 guibg=#303000
+set backspace=2
+set laststatus=2
+set hidden
+set lazyredraw
+
+"indenting
+set tabstop=4
+set softtabstop=4
+set expandtab
+set smartindent
+
+"encoding
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
+set fileformats=unix,dos,mac
+
+"searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" Key maps
+let mapleader=" "
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
+nnoremap <silent> <Leader>+ :vertical resize +5<CR>
+nnoremap <silent> <Leader>- :vertical resize -5<CR>
+
+" VimPLug
+let vimplug_exists=expand('~/.vim/autoload/plug.vim')
+
+if !filereadable(vimplug_exists)
+    if !executable("curl")
+        echoerr "You have to install curl or install vim-plug by yourself!"
+        execute "q!"
+    endif
+    echo "Installing vim-plug..."
+    echo ""
+    silent exec "!\curl -fLo " . vimplug_exists . " --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim"
+    let g:not_finish_vimplug = "yes"
+    autocmd VimEnter * PlugInstall
+endif
+
+" Pligins
+call plug#begin('~/.vim/plugged')
+
+Plug 'itchyny/lightline.vim'
+Plug 'mbbill/undotree'
+Plug 'yggdroot/indentline'
+
+call plug#end()
+
+
+" LightLine
+let g:lightline = {
+            \ 'colorscheme': 'powerline',
+            \ 'active': {
+            \   'left': [ ['mode', 'paste'],
+            \               [ 'gitbranch','readonly', 'filename', 'modified'],
+            \           ],
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'FugitiveHead'
+            \ },
+            \}
