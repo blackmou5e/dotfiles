@@ -13,7 +13,6 @@ sudo apt install \
         zsh-syntax-highlighting
 
 #Install configs
-git clone https://github.com/blackmou5e/dotfiles.git
 ln -s "${HOME}"/dotfiles/config/vim "${HOME}"/.vimrc
 ln -s "${HOME}"/dotfiles/config/zshrc "${HOME}"/.zshrc
 
