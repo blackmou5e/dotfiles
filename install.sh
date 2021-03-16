@@ -19,4 +19,9 @@ ln -s "${HOME}"/dotfiles/config/zshrc "${HOME}"/.zshrc
 #Install vim plugins
 vim +PlugInstall +qall
 
+#Install NF
+curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip -O /tmp/FiraCode.zip
+unzip /tmp/FiraCode.zip -d /tmp/fonts
+mv /tmp/fonts/* "${HOME}"/.local/share/fonts
+
 exit 0
