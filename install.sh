@@ -15,6 +15,7 @@ sudo apt install \
 #Install configs
 ln -s "${HOME}"/dotfiles/config/vim "${HOME}"/.vimrc
 ln -s "${HOME}"/dotfiles/config/zshrc "${HOME}"/.zshrc
+ln -s "${HOME}"/dotfiles/config/tmux.conf "${HOME}"/.tmux.conf
 
 #Install vim plugins
 vim +PlugInstall +qall
