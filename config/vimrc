@@ -17,10 +17,10 @@ set cursorline
 hi cursorline cterm=none term=none
 highlight CursorLine ctermbg=234 guibg=#303000
 set backspace=2
-set laststatus=2
 set hidden
 set lazyredraw
 set wildmenu
+set showtabline=1
 
 "indenting
 set tabstop=4
@@ -66,32 +66,40 @@ if !filereadable(vimplug_exists)
     autocmd VimEnter * PlugInstall
 endif
 
-" Pligins
+" Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'itchyny/lightline.vim'
-Plug 'mbbill/undotree'
+"Themes plugins
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
-Plug 'yggdroot/indentline'
+
+"Languages
 Plug 'vimwiki/vimwiki'
+
+"Git tools
+Plug 'tpope/vim-fugitive'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+"Coding tools
+Plug 'dense-analysis/ale'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'yggdroot/indentline'
+
+"General tools
+Plug 'mbbill/undotree'
 
 call plug#end()
 
 
-" LightLine
-let g:lightline = {
-            \ 'colorscheme': 'powerline',
-            \ 'active': {
-            \   'left': [ ['mode', 'paste'],
-            \               [ 'gitbranch','readonly', 'filename', 'modified'],
-            \           ],
-            \ },
-            \ 'component_function': {
-            \   'gitbranch': 'FugitiveHead'
-            \ },
-            \}
+" Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme='term'
+
 
 "NerdTree
 autocmd StdinReadPre * let s:std_in=1
@@ -106,3 +114,9 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 
 " VimWiki
 let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
+
+
+" ALE
+let g:ale_linters={'python': ['pylint']}
+let g:ale_fixers={'python':['black']}
+let g:ale_fix_on_save = 1
