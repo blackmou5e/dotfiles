@@ -51,6 +51,10 @@ nnoremap <leader>pv :NERDTreeMirror<CR>:NERDTreeFocus<CR>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
 
+" Fix Conceal
+let g:indentLine_setConceal = 0 
+let g:vim_json_syntax_conceal = 0
+
 " VimPLug
 let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 
