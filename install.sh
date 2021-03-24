@@ -1,4 +1,4 @@
-#!/usr/env bash
+#!/usr/bin/env bash
 
 #Update
 sudo apt update
@@ -22,7 +22,7 @@ vim +PlugInstall +qall
 
 #Install NF
 curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip -O /tmp/FiraCode.zip
-unzip /tmp/FiraCode.zip -d /tmp/fonts
+unzip /tmp/FiraCode -d /tmp/fonts
 mv /tmp/fonts/* "${HOME}"/.local/share/fonts
 
 exit 0

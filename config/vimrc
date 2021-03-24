@@ -74,6 +74,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 "Themes plugins
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
@@ -87,15 +88,17 @@ Plug 'tpope/vim-fugitive'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 "Coding tools
-Plug 'dense-analysis/ale'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'yggdroot/indentline'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 "General tools
 Plug 'mbbill/undotree'
 
 call plug#end()
+
+" theme
+set background=dark 
+colorscheme gruvbox
 
 
 " Airline
@@ -106,6 +109,8 @@ let g:airline_theme='term'
 
 
 "NerdTree
+let g:NERDTreeDirArrowExpandable="+"
+let g:NERDTreeDirArrowCollapsible="~"
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 
@@ -124,3 +129,33 @@ let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
 let g:ale_linters={'python': ['pylint']}
 let g:ale_fixers={'python':['black']}
 let g:ale_fix_on_save = 1
+
+
+" Coc.nvim
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('doHover')
+  endif
+endfunction
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
