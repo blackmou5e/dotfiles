@@ -125,12 +125,6 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
 
 
-" ALE
-let g:ale_linters={'python': ['pylint']}
-let g:ale_fixers={'python':['black']}
-let g:ale_fix_on_save = 1
-
-
 " Coc.nvim
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
