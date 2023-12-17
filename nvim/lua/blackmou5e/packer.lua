@@ -63,6 +63,7 @@ return require("packer").startup(function(use)
 
 	use "nvim-treesitter/playground"
 	use "nvim-treesitter/nvim-treesitter-context"
+    use "lewis6991/gitsigns.nvim"
 	use "theprimeagen/harpoon"
 	use "theprimeagen/refactoring.nvim"
 	use "mbbill/undotree"
