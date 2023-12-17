@@ -70,6 +70,5 @@ return require("packer").startup(function(use)
     use "mbbill/undotree"
     use "tpope/vim-fugitive"
     use "folke/zen-mode.nvim"
-    use "eandrju/cellular-automaton.nvim"
     use "laytan/cloak.nvim"
 end)
