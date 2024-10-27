@@ -1,9 +1,6 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+export PATH=$HOME/.local/bin:$PATH
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # HOMEBREW
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -20,29 +17,20 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 
 # PLUGINS
-# THEME
-zinit ice depth=1; zinit light romkatv/powerlevel10k
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # big three
 zinit light zsh-users/zsh-syntax-highlighting
+#zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
 
 # another
 zinit light Aloxaf/fzf-tab
 
 # COMPLETIONS
-setopt complete_aliases
 autoload -U compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-source <(werf completion --shell=zsh)
-source /Users/gnikishin/yandex-cloud/completion.zsh.inc
 
 # HISTORY
 HISTSIZE=5000
@@ -63,33 +51,65 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
 # SHELL INTEGRATIONS
-eval "$(fzf --zsh)"
+source ~/.fzf.zsh
 
-# SSH AGENT
-export SSH_ASKPASS=/usr/local/bin/ssh-askpass
-launchctl setenv SSH_ASKPASS $SSH_ASKPASS
-SSH_ENV="/tmp/.ssh_environment_added"
-env_display="`/bin/launchctl getenv DISPLAY`"
-if [[ "x${env_display}" == "x" ]]; then
-	/bin/launchctl setenv DISPLAY :0
-fi
+# GPG
+#eval $(gpg-agent --daemon)
+export GPG_TTY=$(tty)
+export SSH_AUTH_SOCK=${HOME}/.ssh/agent
 
-function start_agent {
-    echo "Initializing new SSH agent..."
-    echo > "${SSH_ENV}"
-    /usr/bin/ssh-add -c $HOME/.ssh/id_rsa; # my key
-    /usr/bin/ssh-add -c $HOME/.ssh/github_personal; # personal repos
+function reload_ssh {
+  # pkcs11_path="/usr/lib/ssh-keychain.dylib"
+  # pkcs11_path="/usr/local/lib/opensc-pkcs11.so"
+  # pkcs11_path="/opt/homebrew/lib/pkcs11/opensc-pkcs11.so"
+  ssh_add_path="ssh-add"
+  ssh_agent_path="ssh-agent"
+
+  $ssh_add_path -D
+  if [ "$1" = "-f" ]; then
+    echo "Forcibly killing off previous process"
+    launchctl unload ~/Library/LaunchAgents/com.zerowidth.launched.ssh_agent.plist
+    pkill -9 ssh-agent
+    pkill -9 ssh-pkcs11-helper
+    launchctl load -w ~/Library/LaunchAgents/com.zerowidth.launched.ssh_agent.plist
+  else
+    $ssh_add_path -e $pkcs11_path >> /dev/null
+    if [ $? -gt 0 ]; then
+      echo "Failed to remove previous card. Retry or run with -f option"
+    fi
+  fi
+
+  $ssh_add_path -s $pkcs11_path
+  $ssh_add_path
 }
 
-# Source SSH settings, if applicable
+# ssh-askpass
+#export SSH_ASKPASS=/user/loca/bin/ssh-askpass
 
-if [ -f "${SSH_ENV}" ]; then
-    ps -ef | grep ssh-agent > /dev/null || {
-        start_agent;
-    }
-else
-    start_agent;
-fi
+# SSH AGENT
+#export SSH_ASKPASS=/usr/local/bin/ssh-askpass
+#launchctl setenv SSH_ASKPASS $SSH_ASKPASS
+#SSH_ENV="/tmp/.ssh_environment_added"
+#env_display="`/bin/launchctl getenv DISPLAY`"
+#if [[ "x${env_display}" == "x" ]]; then
+#	/bin/launchctl setenv DISPLAY :0
+#fi
+#
+#function start_agent {
+#    echo "Initializing new SSH agent..."
+#    echo > "${SSH_ENV}"
+#    /usr/bin/ssh-add -c $HOME/.ssh/id_rsa; # my key
+#}
+#
+## Source SSH settings, if applicable
+#
+#if [ -f "${SSH_ENV}" ]; then
+#    ps -ef | grep ssh-agent > /dev/null || {
+#        start_agent;
+#    }
+#else
+#    start_agent;
+#fi
 
 h=()
 if [[ -r ~/.ssh/config ]]; then
@@ -113,5 +133,11 @@ if [ -f '/Users/gnikishin/yandex-cloud/completion.zsh.inc' ]; then source '/User
 
 # ALIASES
 alias ls='ls --color'
-alias tn="tmux new -s $1"
-alias ssh='sshrc'
+alias tn="tmux -u new -s $1"
+alias ts="tmux -u ls"
+alias tc="tmux -u a -t $1"
+
+source <(werf completion --shell=zsh)
+source <(kubectl completion zsh)
+
+eval "$(starship init zsh)"
