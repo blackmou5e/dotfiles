@@ -1,36 +1,37 @@
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # HOMEBREW
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ZINIT
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-if [ ! -d "$ZINIT_HOME" ]; then
-  mkdir -p "$(dirname $ZINIT_HOME)"
-  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-
-source "${ZINIT_HOME}/zinit.zsh"
+# ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+# 
+# if [ ! -d "$ZINIT_HOME" ]; then
+#   mkdir -p "$(dirname $ZINIT_HOME)"
+#   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+# fi
+# 
+# source "${ZINIT_HOME}/zinit.zsh"
 
 
 # PLUGINS
 # big three
-zinit light zsh-users/zsh-syntax-highlighting
-#zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-completions
+# zinit light zsh-users/zsh-syntax-highlighting
+# zinit light zsh-users/zsh-autosuggestions
+# zinit light zsh-users/zsh-completions
 
 # another
-zinit light Aloxaf/fzf-tab
+# zinit light Aloxaf/fzf-tab
 
 # COMPLETIONS
-autoload -U compinit && compinit
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+# autoload -U compinit && compinit
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# zstyle ':completion:*' menu no
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 # HISTORY
 HISTSIZE=5000
@@ -46,12 +47,12 @@ setopt hist_ignore_dups
 setopt hist_find_no_dups
 
 # KEYBINDS
-bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
+# bindkey -e
+# bindkey '^p' history-search-backward
+# bindkey '^n' history-search-forward
 
 # SHELL INTEGRATIONS
-source ~/.fzf.zsh
+# source ~/.fzf.zsh
 
 # GPG
 #eval $(gpg-agent --daemon)
@@ -111,25 +112,25 @@ function reload_ssh {
 #    start_agent;
 #fi
 
-h=()
-if [[ -r ~/.ssh/config ]]; then
-  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
-fi
-if [[ -r ~/.ssh/known_hosts ]]; then
-  h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
-fi
-if [[ $#h -gt 0 ]]; then
-  zstyle ':completion:*:ssh:*' hosts $h
-  zstyle ':completion:*:scp:*' hosts $h
-  zstyle ':completion:*:slogin:*' hosts $h
-fi
+#h=()
+#if [[ -r ~/.ssh/config ]]; then
+#  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
+#fi
+#if [[ -r ~/.ssh/known_hosts ]]; then
+#  h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
+#fi
+#if [[ $#h -gt 0 ]]; then
+#  zstyle ':completion:*:ssh:*' hosts $h
+#  zstyle ':completion:*:scp:*' hosts $h
+#  zstyle ':completion:*:slogin:*' hosts $h
+#fi
 
 # TOOLS
 # YC cli
 # The next line updates PATH for Yandex Cloud CLI.
-if [ -f '/Users/gnikishin/yandex-cloud/path.bash.inc' ]; then source '/Users/gnikishin/yandex-cloud/path.bash.inc'; fi
-# The next line enables shell command completion for yc.
-if [ -f '/Users/gnikishin/yandex-cloud/completion.zsh.inc' ]; then source '/Users/gnikishin/yandex-cloud/completion.zsh.inc'; fi
+#if [ -f '/Users/gnikishin/yandex-cloud/path.bash.inc' ]; then source '/Users/gnikishin/yandex-cloud/path.bash.inc'; fi
+## The next line enables shell command completion for yc.
+#if [ -f '/Users/gnikishin/yandex-cloud/completion.zsh.inc' ]; then source '/Users/gnikishin/yandex-cloud/completion.zsh.inc'; fi
 
 # ALIASES
 alias ls='ls --color'
@@ -137,7 +138,7 @@ alias tn="tmux -u new -s $1"
 alias ts="tmux -u ls"
 alias tc="tmux -u a -t $1"
 
-source <(werf completion --shell=zsh)
-source <(kubectl completion zsh)
+#source <(werf completion --shell=zsh)
+#source <(kubectl completion zsh)
 
-eval "$(starship init zsh)"
+#eval "$(starship init zsh)"
