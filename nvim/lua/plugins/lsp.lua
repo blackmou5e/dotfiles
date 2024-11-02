@@ -63,6 +63,12 @@ return {
                         }
                     })
                 end,
+                ["zls"] = function()
+                    nvim_lsp["zls"].setup({
+                        on_attach = on_attach,
+                        capabilities = capabilities,
+                    })
+                end,
                 ["helm_ls"] = function()
                     nvim_lsp["helm_ls"].setup({
                         on_attach = on_attach,
