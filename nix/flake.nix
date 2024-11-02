@@ -37,6 +37,10 @@
             kubernetes-helm
             stern
             lazygit
+            openstackclient-full
+            dive
+            ansible
+            gh
 
             # lsp
             helm-ls
@@ -70,6 +74,7 @@
             "mas"
             "fzf"
             "coreutils"
+            "gnu-getopt"
           ];
           casks = [
             "iina"
@@ -77,10 +82,12 @@
             "docker"
             "google-chrome"
             "iterm2"
+            "warp"
             "raycast"
             "visual-studio-code"
             "vscodium"
             "zen-browser"
+            "balenaetcher"
           ];
           masApps = {
             "Telegram" = 747648890;
