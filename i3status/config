@@ -8,8 +8,9 @@ general {
 order += "path_exists VPN"
 order += "wireless wlan0"
 order += "battery 0"
-order += "memory"
-order += "load"
+#order += "memory"
+#order += "load"
+order += "volume master"
 order += "tztime local"
 
 wireless wlan0 {
@@ -46,4 +47,12 @@ memory {
         format = "%used"
         threshold_degraded = "10%"
         format_degraded = "MEMORY: %free"
+}
+
+volume master {
+   format = " %volume"
+   format_muted = " %volume"
+   device = "default"
+   mixer = "Master"
+   mixer_idx = 0
 }
