@@ -27,7 +27,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "rust_analyzer",
+                --"rust_analyzer",
                 "gopls",
             },
             handlers = {
@@ -37,7 +37,7 @@ return {
                     }
                 end,
 
-                zls = function()
+                ["zls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.zls.setup({
                         root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
