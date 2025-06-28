@@ -31,7 +31,10 @@ return {
             "go",
             "vue",
             "javascript",
-            "typescript"
+            "typescript",
+            "css",
+            "scss",
+            "pug",
         },
         incremental_selection = {
             enable = true,

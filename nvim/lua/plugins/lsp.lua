@@ -27,8 +27,8 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                --"rust_analyzer",
-                "gopls",
+                "zls",
+                "ts_ls",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -36,7 +36,57 @@ return {
                         capabilities = capabilities
                     }
                 end,
-
+                ["volar"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.ts_ls.setup({
+                        init_options = {
+                            vue = {
+                                hybridMode = false,
+                            },
+                        },
+                        settings = {
+                            typescript = {
+                                inlayHints = {
+                                    enumMemberValues = { enabled = true },
+                                    functionLikeReturntypes = { enabled = true },
+                                    propertyDeclarationTypes = { enabled = true },
+                                    parameterTypes = { enabled = true },
+                                    variableType = { enabled = true },
+                                },
+                            },
+                        },
+                    })
+                end,
+                ["ts_ls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.ts_ls.setup({
+                        file_types = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+                        init_options = {
+                            plugins = {
+                                name = "@vue/typescript-plugin",
+                                location = vim.fn.stdpath "data" .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+                                languages = { "vue" },
+                            },
+                        },
+                        settings = {
+                            typescript = {
+                                tsserver = {
+                                    useSyntaxServer = false,
+                                },
+                                inlayHints = {
+                                    includeInlayParameterNameHints = 'all',
+                                    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                                    includeInlayFunctionParameterTypeHints = true,
+                                    includeInlayVariableTypeHints = true,
+                                    includeInlatyVariableTypeHintsWhentypeMatchesName = true,
+                                    includeInlayPropertyDeclarationtypeHints = true,
+                                    includInlayFunctionLikeREturnTypeHints = true,
+                                    includeInlayEnumMemberValueHints = true,
+                                },
+                            },
+                        },
+                    })
+                end,
                 ["zls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.zls.setup({
@@ -58,7 +108,7 @@ return {
                         capabilities = capabilities,
                         settings = {
                             Lua = {
-                                runtime = { version = "Lua 5.1" },
+                                runtime = { version = "Lua 5.4" },
                                 diagnostics = {
                                     globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
                                 }
