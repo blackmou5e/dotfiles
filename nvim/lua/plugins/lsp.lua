@@ -11,16 +11,23 @@ return {
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
         "j-hui/fidget.nvim",
+        "stevearc/conform.nvim"
     },
 
     config = function()
+        require("conform").setup({
+            formatters_by_ft = {}
+        })
+
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
         local capabilities = vim.tbl_deep_extend(
             "force",
             {},
             vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities())
+            cmp_lsp.default_capabilities()
+        )
+
 
         require("fidget").setup({})
         require("mason").setup()
@@ -36,6 +43,7 @@ return {
                         capabilities = capabilities
                     }
                 end,
+
                 ["volar"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.ts_ls.setup({
@@ -104,17 +112,24 @@ return {
                 end,
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
+                    lspconfig.lua_ls.setup({
                         capabilities = capabilities,
                         settings = {
                             Lua = {
                                 runtime = { version = "Lua 5.4" },
                                 diagnostics = {
                                     globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
-                                }
+                                },
+                                format = {
+                                    enable = true,
+                                    defaultconfig = {
+                                        indent_style = "space",
+                                        indent_size = "2",
+                                    },
+                                },
                             }
                         }
-                    }
+                    })
                 end,
             }
         })
