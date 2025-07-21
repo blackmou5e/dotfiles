@@ -3,6 +3,7 @@
 	name = George Nikishin
 
 [core]
+    editor = nvim
     compression = 9
     whitespace = error
     preloadindex = true
@@ -13,7 +14,7 @@
     statusHints = false
 
 [init]
-	defaultBranch = main
+	defaultBranch = master
 
 [status]
     branch = true
@@ -32,7 +33,7 @@
 
 [pull]
     default = current
-    rebase = true
+	rebase = true
 
 [rebase]
     autoStash = true
@@ -64,3 +65,8 @@
 [pager]
     branch = false
     tag = false
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
