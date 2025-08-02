@@ -1,0 +1,43 @@
+# Primary YAML configuration
+[[language]]
+name = "yaml"
+scope = "source.yaml"
+file-types = ["yml", "yaml"]
+roots = [".yamllint", ".yamllint.yml", ".yamllint.yaml"]
+comment-token = "#"
+indent = { tab-width = 2, unit = "  " }
+language-servers = ["yaml-language-server"]
+
+# Helm-specific configuration
+[[language]]
+name = "helm"
+scope = "source.helm"
+injection-regex = "helm"
+file-types = []  # Don't auto-detect by extension
+roots = ["Chart.yaml", "Chart.lock", "values.yaml"]
+comment-token = "#"
+indent = { tab-width = 2, unit = "  " }
+language-servers = ["helm-ls"]
+
+[language-server.yaml-language-server]
+command = "yaml-language-server"
+args = ["--stdio"]
+
+[language-server.helm-ls]
+command = "helm_ls"
+args = ["serve"]
+
+[[language]]
+name = "go"
+roots = ["go.work", "go.mod"]
+auto-format = true
+comment-token = "//"
+language-servers = [ "gopls", "golangci-lint-lsp" ]
+
+[language-server.gopls.config]
+"formatting.gofumpt" = true
+
+#[language-server.golangci-lint-lsp.config]
+#command = ["golangci-lint", "run", "--output.json.path", "stdout", "--issues-exit-code=1"]
+[language-server.golangci-lint-lsp.config]
+command = ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--issues-exit-code=1"]
