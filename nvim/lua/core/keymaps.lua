@@ -13,10 +13,9 @@ vim.keymap.set("n", "<C-h>", "<cmd>lprev<CR>zz")
 
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>e", "<cmd>Oil<CR>")
-vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<cr>")
 
 vim.api.nvim_create_autocmd('LspAttach', {
-    group = ThePrimeagenGroup,
+    group = blackmou5eGroup,
     callback = function(e)
         local opts = { buffer = e.buf }
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
