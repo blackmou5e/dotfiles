@@ -17,3 +17,20 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+
+
+vim.diagnostic.config({
+    update_in_insert = true,
+    virtual_text = false,
+    underline = true,
+    virtual_lines = true,
+    signs = true,
+    float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "●",
+    },
+})
