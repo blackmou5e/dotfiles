@@ -20,12 +20,19 @@ vim.o.scrolloff = 8
 vim.g.mapleader = " "
 
 -- New built-in plugin manager, here we go guys!
-vim.pack.add({ { src = "https://github.com/vague2k/vague.nvim" },
+vim.pack.add({
+    { src = "https://github.com/vague2k/vague.nvim" },
     { src = "https://github.com/stevearc/oil.nvim" },
     { src = "https://github.com/echasnovski/mini.pick" },
-    { src = "https://github.com/neovim/nvim-lspconfig" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/p00f/clangd_extensions.nvim" },
+})
+
+require("nvim-treesitter.configs").setup({
+    ensure_installed = { "lua", "luadoc", "c", "cpp", "terraform", "helm", "go" },
+    auto_install = false,
+    highlight = { enabled = true },
 })
 
 -- A bit of omnicomplete and lsp magic, to enable them doing love
@@ -39,25 +46,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 vim.cmd("set completeopt+=noselect")
 
-
--- some lua ls config, in order to make diagnostics shut up
-vim.lsp.config['lua_ls'] = {
-    cmd = { 'lua-language-server' },
-    filetypes = { 'lua' },
-    root_markers = { { '.luarc.json', '.luarc.jsonc' }, '.git' },
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                globals = { "vim" },
-            }
-        }
-    }
-}
-
-vim.lsp.enable({ "lua_ls", "clangd" })
+vim.lsp.enable({ "lua_ls", "clangd", "tinymist" })
 
 -- diagnostics setup
 vim.diagnostic.config({
@@ -113,58 +102,15 @@ require("vague").setup({
     },
     -- plugin styles where applicable
     -- make an issue/pr if you'd like to see more styling oions!
-    -- plugins = {
-    --     cmp = {
-    --         match = "bold",
-    --         match_fuzzy = "bold",
-    --     },
-    --     dashboard = {
-    --         footer = "italic",
-    --     },
-    --     lsp = {
-    --         diagnostic_error = "bold",
-    --         diagnostic_hint = "none",
-    --         diagnostic_info = "italic",
-    --         diagnostic_ok = "none",
-    --         diagnostic_warn = "bold",
-    --     },
-    --     neotest = {
-    --         focused = "bold",
-    --         adapter_name = "bold",
-    --     },
-    --     telescope = {
-    --         match = "bold",
-    --     },
-    -- },
-
-    -- Override highlights or add new highlights
-    -- on_highlights = function(highlights, colors) end,
-
-    -- Override colors
-    -- colors = {
-    --     bg = "#141415",
-    --     fg = "#cdcdcd",
-    --     floatBorder = "#878787",
-    --     line = "#252530",
-    --     comment = "#606079",
-    --     builtin = "#b4d4cf",
-    --     func = "#c48282",
-    --     string = "#e8b589",
-    --     number = "#e0a363",
-    --     property = "#c3c3d5",
-    --     constant = "#aeaed1",
-    --     parameter = "#bb9dbd",
-    --     visual = "#333738",
-    --     error = "#d8647e",
-    --     warning = "#f3be7c",
-    --     hint = "#7e98e8",
-    --     operator = "#90a0b5",
-    --     keyword = "#6e94b2",
-    --     type = "#9bb4bc",
-    --     search = "#405065",
-    --     plus = "#7fa563",
-    --     delta = "#f3be7c",
-    -- },
+    plugins = {
+        lsp = {
+            diagnostic_error = "bold",
+            diagnostic_hint = "none",
+            diagnostic_info = "italic",
+            diagnostic_ok = "none",
+            diagnostic_warn = "bold",
+        },
+    },
 })
 
 vim.cmd("colorscheme vague")
