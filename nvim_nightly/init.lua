@@ -25,6 +25,7 @@ vim.pack.add({
     { src = "https://github.com/stevearc/oil.nvim" },
     { src = "https://github.com/echasnovski/mini.pick" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { src = "https://github.com/L3MON4D3/LuaSnip" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/p00f/clangd_extensions.nvim" },
 })
@@ -66,6 +67,17 @@ vim.diagnostic.config({
 })
 
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
+
+
+-- snippets
+local ls = require("luasnip")
+ls.setup({ enable_autosnippets = true })
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+
+vim.keymap.set({ "i" }, "<C-e>", function() ls.expand() end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true })
+
 
 -- Theme settings, nothing interesting in particular
 require("vague").setup({
