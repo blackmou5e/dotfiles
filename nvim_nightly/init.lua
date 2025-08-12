@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 vim.cmd("set completeopt+=noselect")
 
-vim.lsp.enable({ "lua_ls", "clangd", "tinymist" })
+vim.lsp.enable({ "lua_ls", "clangd", "helm_ls", "tinymist" })
 
 -- diagnostics setup
 vim.diagnostic.config({
