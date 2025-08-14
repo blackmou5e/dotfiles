@@ -14,3 +14,9 @@ source ~/.local/share/omarchy/default/bash/rc
 # PS1="\W \[\e]0;\w\a\]$PS1"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 . "/home/blackmou5e/.local/share/bob/env/env.sh"
+
+
+alias ls="ls --color"
+alias tn="tmux -u new -s"
+alias ts="tmux -u ls"
+alias tc="tmux -u a -t"
