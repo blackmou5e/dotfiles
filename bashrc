@@ -11,7 +11,9 @@ source ~/.local/share/omarchy/default/bash/rc
 # export EDITOR="code"
 #
 # Set a custom prompt with the directory revealed (alternatively use https://starship.rs)
+export PROMPT_DIRTRIM=2
 # PS1="\W \[\e]0;\w\a\]$PS1"
+PS1="[\w] $PS1"
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 . "/home/blackmou5e/.local/share/bob/env/env.sh"
 
