@@ -6,3 +6,4 @@ ruby_build_opts = "CC=gcc-14 CXX=g++-14"
 
 [tools]
 go = "latest"
+ruby = "latest"
