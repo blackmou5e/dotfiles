@@ -27,6 +27,7 @@ vim.pack.add({
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/p00f/clangd_extensions.nvim" },
 	{ src = "https://github.com/tahayvr/matteblack.nvim" },
+    { src = "https://github.com/chomosuke/typst-preview.nvim" },
 })
 
 require("nvim-treesitter.configs").setup({
@@ -98,6 +99,28 @@ require("oil").setup({
 		},
 	},
 })
+
+require("typst-preview").setup({
+    debug = false,
+    open_cmd = "chromium %s",
+    -- port = 9999,
+    invert_colors = 'never',
+    follow_cursor = true,
+
+    get_root = function(path_of_main_file)
+        local root = os.getenv 'TYPST_ROOT'
+        if root then
+            return root
+        end
+        return vim.fn.fnamemodify(path_of_main_file, ':p:h')
+    end,
+
+    get_main_file = function(path_of_buffer)
+        return path_of_buffer
+    end,
+})
+
+
 require("mini.pick").setup()
 
 -- some keymaps
