@@ -23,6 +23,7 @@ vim.pack.add({
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter-context" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/p00f/clangd_extensions.nvim" },
@@ -31,9 +32,20 @@ vim.pack.add({
 })
 
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "luadoc", "c", "cpp", "terraform", "helm", "go" },
+	ensure_installed = { "lua", "luadoc", "c", "cpp", "go", "yaml", "terraform", "helm" },
 	auto_install = false,
 	highlight = { enabled = true },
+})
+
+require("treesitter-context").setup({
+    enable = true,
+    multiwindow = false,
+    line_numbers = true,
+    multiline_threshold = 20,
+    trim_scope = true,
+    mode = "cursor",
+    separator = nil,
+    zindex = 20,
 })
 
 -- A bit of omnicomplete and lsp magic, to enable them doing love
