@@ -32,7 +32,7 @@ vim.pack.add({
 })
 
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "luadoc", "c", "cpp", "go", "yaml", "terraform", "helm" },
+	ensure_installed = { "lua", "luadoc", "c", "cpp", "go", "ruby", "yaml", "terraform", "helm" },
 	auto_install = false,
 	highlight = { enabled = true },
 })
@@ -59,7 +59,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 vim.cmd("set completeopt+=noselect")
 
-vim.lsp.enable({ "lua_ls", "clangd", "gopls", "helm_ls", "tinymist" })
+vim.lsp.enable({
+    "lua_ls",
+    "clangd",
+    "gopls",
+    "ruby-lsp",
+    "helm_ls",
+    "tinymist",
+})
 
 -- diagnostics setup
 vim.diagnostic.config({
