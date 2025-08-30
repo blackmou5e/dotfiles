@@ -9,19 +9,21 @@ return {
             apiVersion: v1
             kind: Service
             metadata:
-              name: <>
+              name: placeholder
               labels:
-                <>
+                placeholder
+              annotations:
+                placeholder
             spec:
               selector:
-                <>
+                placeholder
               type: LoadBalancer
               ports:
                 - protocol: TCP
-                  port: <>
-                  targetPort: <>
+                  port: placeholder
+                  targetPort: placeholder
             ]],
-            { i(1), i(2), i(3), i(4), i(5) }
+            {}
         )
     ),
     s(
@@ -32,19 +34,21 @@ return {
             apiVersion: v1
             kind: Service
             metadata:
-              name: <>
+              name: placeholder
               labels:
-                <>
+                placeholder
+              annotations:
+                placeholder
             spec:
               selector:
-                <>
+                placeholder
               type: NodePort
               ports:
-                - port: <>
-                  targetPort: <>
-                  nodePort: <>
+                - port: placeholder
+                  targetPort: placeholder
+                  nodePort: placeholder
             ]],
-            { i(1), i(2), i(3), i(4), i(5), i(6) }
+            {}
         )
     ),
     s(
@@ -55,14 +59,16 @@ return {
             apiVersion: v1
             kind: Service
             metadata:
-              name: <>
+              name: placeholder
               labels:
-                <>
+                placeholder
+              annotations:
+                placeholder
             spec:
               type: LoadBalancer
-              externalName: <>
+              externalName: placeholder
             ]],
-            { i(1), i(2), i(3) }
+            {}
         )
     ),
     s(
@@ -73,18 +79,20 @@ return {
             apiVersion: v1
             kind: Service
             metadata:
-              name: <>
+              name: placeholder
               labels:
-                <>
+                placeholder
+              annotations:
+                placeholder
             spec:
               selector:
-                <>
+                placeholder
               ports:
                 - protocol: TCP
-                  port: <>
-                  targetPort: <>
+                  port: placeholder
+                  targetPort: placeholder
             ]],
-            { i(1), i(2), i(3), i(4), i(5) }
+            {}
         )
     ),
     s(
@@ -97,7 +105,9 @@ return {
             metadata:
               name: placeholder
               labels:
-               placeholder
+                placeholder
+              annotations:
+                placeholder
             spec:
               # Must match .metadata.name of the headless service
               serviceName: placeholder
@@ -339,6 +349,15 @@ return {
                   resources:
                     requests:
                       storage: placeholder
+            ]],
+            {}
+        )
+    ),
+    s(
+        { trig = "dpl", snippetType = "autosnippet" },
+        fmta(
+            [[
+            ---
             ]],
             {}
         )
