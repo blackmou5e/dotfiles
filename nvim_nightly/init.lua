@@ -27,7 +27,8 @@ vim.pack.add({
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/p00f/clangd_extensions.nvim" },
-	{ src = "https://github.com/tahayvr/matteblack.nvim" },
+	-- { src = "https://github.com/tahayvr/matteblack.nvim" },
+    { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
 })
 
@@ -97,7 +98,11 @@ vim.keymap.set({ "i" }, "<C-e>", function() ls.expand() end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true })
 
-vim.cmd("colorscheme matteblack")
+--vim.cmd("colorscheme matteblack")
+require("tokyonight").setup({
+    transparent = true,
+})
+vim.cmd("colorscheme tokyonight")
 
 -- plugins init
 require("oil").setup({
