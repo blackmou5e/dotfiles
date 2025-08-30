@@ -29,6 +29,7 @@ vim.pack.add({
 	{ src = "https://github.com/p00f/clangd_extensions.nvim" },
     { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
+    { src = "https://github.com/vimwiki/vimwiki" },
 })
 
 require("nvim-treesitter.configs").setup({
