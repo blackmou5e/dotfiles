@@ -65,5 +65,15 @@ return {
   settings = {
     -- https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
     redhat = { telemetry = { enabled = false } },
+    yaml = {
+        schemas = {
+            ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+            ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+            ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+            ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+            ["http://json.schemastore.org/gitlab-ci"] = ".gitlab-ci.yml",
+            -- [""] = "",
+        },
+    },
   },
 }
