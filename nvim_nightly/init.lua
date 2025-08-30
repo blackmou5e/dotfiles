@@ -30,6 +30,7 @@ vim.pack.add({
     { src = "https://github.com/folke/tokyonight.nvim" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/vimwiki/vimwiki" },
+    { src = "https://github.com/towolf/vim-helm" },
 })
 
 require("nvim-treesitter.configs").setup({
@@ -43,7 +44,7 @@ require("treesitter-context").setup({
     multiwindow = false,
     line_numbers = true,
     multiline_threshold = 20,
-    trim_scope = true,
+    trim_scope = "outer",
     mode = "cursor",
     separator = nil,
     zindex = 20,
@@ -65,6 +66,7 @@ vim.lsp.enable({
     "clangd",
     "gopls",
     "ruby-lsp",
+    "yamlls",
     "helm_ls",
     "tinymist",
 })
@@ -90,15 +92,16 @@ vim.diagnostic.config({
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 
 -- snippets
-local ls = require("luasnip")
-ls.setup({ enable_autosnippets = true })
+local snip = require("luasnip")
+snip.setup({ enable_autosnippets = true })
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 
-vim.keymap.set({ "i" }, "<C-e>", function() ls.expand() end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true })
+vim.keymap.set({ "i" }, "<C-e>", function() snip.expand() end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-J>", function() snip.jump(1) end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-K>", function() snip.jump(-1) end, { silent = true })
 
---vim.cmd("colorscheme matteblack")
+
+-- Theme
 require("tokyonight").setup({
     transparent = true,
 })
