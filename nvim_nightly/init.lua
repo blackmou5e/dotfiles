@@ -31,10 +31,22 @@ vim.pack.add({
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/vimwiki/vimwiki" },
     { src = "https://github.com/towolf/vim-helm" },
+    { src = "https://github.com/terrastruct/d2-vim" },
+    { src = "https://github.com/ravsii/tree-sitter-d2" },
 })
 
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "luadoc", "c", "cpp", "go", "ruby", "yaml", "terraform", "helm" },
+	ensure_installed = {
+        "lua",
+        "luadoc",
+        "c",
+        "cpp",
+        "go",
+        "ruby",
+        "yaml",
+        "terraform",
+        "helm",
+    },
 	auto_install = false,
 	highlight = { enabled = true },
 })
