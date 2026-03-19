@@ -71,7 +71,7 @@ return {
             ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
             ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
             ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-            ["http://json.schemastore.org/gitlab-ci"] = ".gitlab-ci.yml",
+            ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = ".gitlab-ci.yml",
             -- [""] = "",
         },
     },

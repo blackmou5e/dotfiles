@@ -35,6 +35,9 @@
     default = current
 	rebase = true
 
+[fetch]
+    prune = true
+
 [rebase]
     autoStash = true
     missingCommitsCheck = warn

@@ -33,6 +33,7 @@ vim.pack.add({
     { src = "https://github.com/towolf/vim-helm" },
     { src = "https://github.com/terrastruct/d2-vim" },
     { src = "https://github.com/ravsii/tree-sitter-d2" },
+    { src = "https://github.com/benomahony/uv.nvim" },
 })
 
 require("nvim-treesitter.configs").setup({
@@ -42,7 +43,9 @@ require("nvim-treesitter.configs").setup({
         "c",
         "cpp",
         "go",
-        "ruby",
+        "javascript",
+        "typescript",
+        "python",
         "yaml",
         "terraform",
         "helm",
@@ -77,18 +80,19 @@ vim.lsp.enable({
     "lua_ls",
     "clangd",
     "gopls",
-    "ruby-lsp",
     "yamlls",
     "helm_ls",
     "tinymist",
+    "ts_ls",
+    "rust_analyzer",
 })
 
 -- diagnostics setup
 vim.diagnostic.config({
 	update_in_insert = true,
-	virtual_text = false,
+	virtual_text = true,
 	underline = true,
-	virtual_lines = true,
+	virtual_lines = false,
 	signs = true,
 	float = {
 		focusable = false,
@@ -141,8 +145,8 @@ require("oil").setup({
 
 require("typst-preview").setup({
     debug = false,
-    open_cmd = "chromium %s",
-    -- port = 9999,
+    open_cmd = 'open -a "Brave Browser" %s',
+    port = 9999,
     invert_colors = 'never',
     follow_cursor = true,
 
@@ -161,6 +165,8 @@ require("typst-preview").setup({
 
 
 require("mini.pick").setup()
+
+require("uv").setup()
 
 -- some keymaps
 vim.keymap.set("n", "<leader>f", ":Pick files<CR>")
