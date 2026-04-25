@@ -85,7 +85,6 @@ line-number = "relative"
 end-of-line-diagnostics = "hint" 
 gutters = ["diff", "diagnostics", "spacer", "line-numbers", "spacer"]
 idle-timeout = 1
-watch = true
 
 [editor.inline-diagnostics] 
 cursor-line = "disable"
