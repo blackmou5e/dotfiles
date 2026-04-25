@@ -1,2 +1,7 @@
 ncmpcpp/error.log
 nvim/lazy-lock.json
+.DS_Store
+*.swp
+*.swo
+*~
+.envrc

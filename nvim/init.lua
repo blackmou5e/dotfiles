@@ -13,6 +13,7 @@ vim.o.swapfile = false
 vim.o.winborder = "rounded"
 vim.o.hlsearch = false
 vim.o.incsearch = true
+vim.o.autoread = true
 vim.o.scrolloff = 8
 
 -- leader, obviously
@@ -27,8 +28,6 @@ vim.pack.add({
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/p00f/clangd_extensions.nvim" },
-    { src = "https://github.com/folke/tokyonight.nvim" },
-    { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/vimwiki/vimwiki" },
     { src = "https://github.com/towolf/vim-helm" },
     { src = "https://github.com/terrastruct/d2-vim" },
@@ -36,22 +35,22 @@ vim.pack.add({
     { src = "https://github.com/benomahony/uv.nvim" },
 })
 
-require("nvim-treesitter.configs").setup({
-	ensure_installed = {
-        "lua",
-        "luadoc",
-        "c",
-        "cpp",
-        "go",
-        "javascript",
-        "typescript",
-        "python",
-        "yaml",
-        "terraform",
-        "helm",
-    },
+
+require("nvim-treesitter").setup({
 	auto_install = false,
 	highlight = { enabled = true },
+})
+
+require('nvim-treesitter').install({
+    'lua',
+    'luadoc',
+    'go',
+    'javascript',
+    'typescript',
+    'python',
+    'yaml',
+    'terraform',
+    'helm',
 })
 
 require("treesitter-context").setup({
@@ -78,8 +77,8 @@ vim.cmd("set completeopt+=noselect")
 
 vim.lsp.enable({
     "lua_ls",
-    "clangd",
     "gopls",
+    "ruff",
     "yamlls",
     "helm_ls",
     "tinymist",
@@ -110,7 +109,7 @@ vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 -- snippets
 local snip = require("luasnip")
 snip.setup({ enable_autosnippets = true })
-require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
+require("luasnip.loaders.from_lua").load({ paths = vim.fn.stdpath("config") .. "/snippets/" })
 
 vim.keymap.set({ "i" }, "<C-e>", function() snip.expand() end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<C-J>", function() snip.jump(1) end, { silent = true })
@@ -145,7 +144,7 @@ require("oil").setup({
 
 require("typst-preview").setup({
     debug = false,
-    open_cmd = 'open -a "Brave Browser" %s',
+    open_cmd = 'open -a "Google Chrome" %s',
     port = 9999,
     invert_colors = 'never',
     follow_cursor = true,
