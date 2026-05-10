@@ -33,6 +33,7 @@ vim.pack.add({
     { src = "https://github.com/terrastruct/d2-vim" },
     { src = "https://github.com/ravsii/tree-sitter-d2" },
     { src = "https://github.com/benomahony/uv.nvim" },
+    { src = "folke/tokyonight.nvim" },
 })
 
 
@@ -173,3 +174,10 @@ vim.keymap.set("n", "<leader>h", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>e", ":Oil<CR>")
 vim.keymap.set("n", "gQ", "<Nop>", { noremap = true })
 vim.keymap.set("n", "q:", "<Nop>", { noremap = true })
+
+
+-- experiment
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  pattern = "*",
+  command = "if mode() != 'c' | checktime | endif",
+})
