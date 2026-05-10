@@ -13,3 +13,4 @@ pi/agent/mcp.json
 pi/agent/settings.json
 pi/agent/mcp-cache.json
 pi/agent/mcp-npx-cache.json
+pi/agent/bin/
