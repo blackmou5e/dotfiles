@@ -1,0 +1,17 @@
+{
+  "lastChangelogVersion": "0.74.0",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.5",
+  "defaultThinkingLevel": "xhigh",
+  "theme": "dark",
+  "packages": [
+    "npm:pi-mcp-adapter",
+    "npm:pi-simplify",
+    "npm:@ff-labs/pi-fff"
+  ],
+  "enabledModels": [
+    "opencode/big-pickle",
+    "openai-codex/gpt-5.5",
+    "openai-codex/gpt-5.3-codex"
+  ]
+}
