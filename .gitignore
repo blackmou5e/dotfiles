@@ -5,3 +5,11 @@ nvim/lazy-lock.json
 *.swo
 *~
 .envrc
+
+# Pi coding agent sensitive/local data
+pi/agent/auth.json
+pi/agent/sessions/
+pi/agent/mcp.json
+pi/agent/settings.json
+pi/agent/mcp-cache.json
+pi/agent/mcp-npx-cache.json
