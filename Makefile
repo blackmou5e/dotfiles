@@ -10,7 +10,7 @@ DIRS := \
 	git/config:$(HOME)/.gitconfig \
 	mise:$(XDG_CONFIG)/mise \
 	nvim:$(XDG_CONFIG)/nvim \
-	pi/agent:$(HOME)/.pi/agent \
+	pi:$(HOME)/.pi \
 	tmux:$(XDG_CONFIG)/tmux \
 	tofurc:$(HOME)/.tofurc
 
@@ -28,6 +28,21 @@ link:
 			exit 1; \
 		fi; \
 		mkdir -p "$$(dirname "$$tgt")"; \
+		source_real="$$(realpath "$$expected")"; \
+		parent_real="$$(cd -P "$$(dirname "$$tgt")" && pwd)"; \
+		target_physical="$$parent_real/$$(basename "$$tgt")"; \
+		if [ "$$target_physical" = "$$source_real" ]; then \
+			if [ -L "$$tgt" ]; then \
+				echo "Refusing to keep recursive symlink $$tgt -> $$expected" >&2; \
+				exit 1; \
+			fi; \
+			echo "Already linked $$tgt -> $$expected (same physical path)"; \
+			continue; \
+		fi; \
+		if [ -e "$$tgt" ] && [ "$$(realpath "$$tgt")" = "$$source_real" ]; then \
+			echo "Already linked $$tgt -> $$expected"; \
+			continue; \
+		fi; \
 		if [ -L "$$tgt" ]; then \
 			current="$$(readlink "$$tgt" 2>/dev/null || true)"; \
 			if [ "$$current" = "$$expected" ]; then \
@@ -42,6 +57,7 @@ link:
 			echo "Backing up $$tgt to $$backup"; \
 			mv "$$tgt" "$$backup"; \
 		fi; \
+		echo "Linking $$tgt -> $$expected"; \
 		ln -s "$$expected" "$$tgt"; \
 	done; \
 	echo "Linked all configs"

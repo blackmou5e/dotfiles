@@ -123,6 +123,13 @@ install_neovim() {
   append_once "$HOME/.zprofile" "$bob_path_line" "bob (Neovim)"
   append_once "$HOME/.zshrc" "$bob_path_line" "bob (Neovim)"
 
+  # bob may leave a read-only nvim proxy in nvim-bin; remove it before switching
+  # versions so `bob use stable` can recreate it instead of failing to copy over it.
+  if [[ -e "$bob_nvim_bin/nvim" || -L "$bob_nvim_bin/nvim" ]]; then
+    chmod u+w "$bob_nvim_bin/nvim" 2>/dev/null || true
+    rm -f "$bob_nvim_bin/nvim"
+  fi
+
   log "Installing and selecting Neovim stable via bob"
   bob use stable
 }
