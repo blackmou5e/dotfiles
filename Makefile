@@ -12,7 +12,8 @@ DIRS := \
 	nvim:$(XDG_CONFIG)/nvim \
 	pi:$(HOME)/.pi \
 	tmux:$(XDG_CONFIG)/tmux \
-	tofurc:$(HOME)/.tofurc
+	tofurc:$(HOME)/.tofurc \
+	gh-dash:$(XDG_CONFIG)/gh-dash
 
 install:
 	@bash "$(DOTFILES_DIR)install.sh"
