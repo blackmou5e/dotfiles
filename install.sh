@@ -69,6 +69,20 @@ ensure_homebrew() {
   append_once "$HOME/.zprofile" "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" "Homebrew"
 }
 
+brew_add_taps() {
+    local tap
+
+    for tap in "$@"; do
+        if brew tap-info "$tap" >/dev/null 2>&1; then
+            log "$tap already added"
+        else
+            log "Adding tap $tap"
+            brew tap "$tap"
+        fi
+    done
+}
+
+
 brew_install_formulae() {
   local formula
 
@@ -136,42 +150,87 @@ install_neovim() {
 
 install_brew_tools() {
   log "Updating Homebrew"
+  brew_add_taps \
+      anomalyco/tap \
+      hashicorp/tap
+
   brew update
 
   install_neovim
 
   brew_install_formulae \
+    ansible \
+    awscli \
+    d2 \
+    deno \
+    diffnav \
+    gh \
     git \
-    tmux \
-    lazygit \
-    mise \
-    node \
-    opentofu \
+    gmp \
+    go \
+    gopls \
+    hadolint \
     helm \
     helm-ls \
-    typst \
-    tinymist \
-    d2 \
-    uv \
+    jq \
+    just \
+    kubernetes-cli \
+    lazydocker \
+    lazygit \
+    libyaml \
     lua-language-server \
-    gopls \
+    mise \
+    mole \
+    node \
+    opencode \
+    openssl@3 \
+    opentofu \
+    pkg-config \
+    python \
+    readline \
+    ripgrep \
+    ruby-build \
     ruff \
-    yaml-language-server \
-    typescript \
-    typescript-language-server \
     rust \
     rust-analyzer \
-    ruby-build \
-    pkg-config \
-    openssl@3 \
-    readline \
-    libyaml \
-    gmp
+    rustup \
+    shellcheck \
+    socat \
+    sqlite \
+    staticcheck \
+    stern \
+    tinymist \
+    tmux \
+    typescript \
+    typescript-language-server \
+    typst \
+    uv \
+    yaml-language-server \
+    yt-dlp \
+    zoxide
 
   brew_install_casks \
+    docker-desktop \
+    font-hurmit-nerd-font \
     ghostty \
     google-chrome \
-    font-hurmit-nerd-font
+    obsidian \
+    raycast \
+    spotify \
+    zoom
+}
+
+install_gh_extensions() {
+  if ! command -v gh >/dev/null 2>&1; then
+    warn "github-cli is not available; skipping gh extensions"
+    return
+  fi
+
+  log "Installing gh dashboard extension"
+  gh extension install dlvhdr/gh-dash
+
+  log "Installing gh actions extension"
+  gh extension install dlvhdr/gh-enhance
 }
 
 install_npm_tools() {
@@ -221,6 +280,7 @@ main() {
 
   install_brew_tools
   install_npm_tools
+  install_gh_extensions
   link_dotfiles
   install_mise_tools
   setup_pi_config
