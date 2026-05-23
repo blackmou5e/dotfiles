@@ -2,11 +2,15 @@
 	email = mail2giz@gmail.com
 	name = George Nikishin
 
+[includeIf "gitdir:~/work/"]
+    path = ~/.gitconfig-work
+
 [core]
     editor = nvim
     compression = 9
     whitespace = error
     preloadindex = true
+    sshCommand = "ssh -i ~/.ssh/main -o IdentitiesOnly=yes"
 
 [advice]
     addEmptyPathspec = false
