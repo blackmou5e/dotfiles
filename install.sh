@@ -217,7 +217,10 @@ install_brew_tools() {
     obsidian \
     raycast \
     spotify \
-    zoom
+    zoom \
+    alcove \
+    hyperkey \
+    typora
 }
 
 install_gh_extensions() {

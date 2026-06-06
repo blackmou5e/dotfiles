@@ -2,7 +2,7 @@
 	email = mail2giz@gmail.com
 	name = George Nikishin
 
-[includeIf "gitdir:~/work/"]
+[includeIf "gitdir:~/work/**"]
     path = ~/.gitconfig-work
 
 [core]

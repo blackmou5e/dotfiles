@@ -6,6 +6,7 @@ window-decoration = true
 macos-option-as-alt = true
 background-opacity = 1
 background-blur-radius = 20
+#macos-titlebar-style = hidden
 
 background = 000000
 foreground = b3b3b3
@@ -38,3 +39,13 @@ font-family-bold-italic = Hurmit Nerd Font Mono
 clipboard-read = allow
 clipboard-write = allow
 copy-on-select = clipboard
+
+keybind = performable:ctrl+h=goto_split:left
+keybind = performable:ctrl+j=goto_split:down
+keybind = performable:ctrl+k=goto_split:up
+keybind = performable:ctrl+l=goto_split:right
+
+keybind = super+ctrl+alt+shift+h=resize_split:left,10
+keybind = super+ctrl+alt+shift+j=resize_split:down,10
+keybind = super+ctrl+alt+shift+k=resize_split:up,10
+keybind = super+ctrl+alt+shift+l=resize_split:right,10

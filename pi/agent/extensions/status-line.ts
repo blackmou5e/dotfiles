@@ -8,7 +8,7 @@
 
 import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { truncateToWidth } from "@earendil-works/pi-tui";
 import { basename } from "node:path";
 
 type Mode = "idle" | "thinking" | "tools";
@@ -65,16 +65,16 @@ export default function (pi: ExtensionAPI) {
 
 		if (state.mode === "tools") {
 			const active = state.activeTools > 1 ? `×${state.activeTools}` : "";
-			const tool = state.lastTool ? ` ${state.lastTool}` : "";
-			return theme.fg("warning", `tools${active}`) + theme.fg("dim", tool);
+			const tool = state.lastTool ? `:${truncateToWidth(state.lastTool, 18, "…")}` : "";
+			return theme.fg("warning", `tool${active}${tool}`);
 		}
 
 		if (state.mode === "thinking") {
-			return theme.fg("accent", "thinking") + (elapsed ? theme.fg("dim", ` ${elapsed}`) : "");
+			return theme.fg("accent", "think") + (elapsed ? theme.fg("dim", ` ${elapsed}`) : "");
 		}
 
-		const last = state.lastDurationMs ? ` last ${formatDuration(state.lastDurationMs)}` : "";
-		return theme.fg("success", "ready") + theme.fg("dim", last);
+		const last = state.lastDurationMs ? ` last:${formatDuration(state.lastDurationMs)}` : "";
+		return theme.fg("success", "ok") + theme.fg("dim", last);
 	}
 
 	function formatThinking(theme: ThemeLike): string {
@@ -82,7 +82,7 @@ export default function (pi: ExtensionAPI) {
 	}
 
 	function formatProgress(theme: ThemeLike): string | undefined {
-		const parts = [];
+		const parts: string[] = [];
 		if (state.turn > 0) parts.push(`turn:${state.turn}`);
 		if (state.completedTools > 0) parts.push(`tools:${state.completedTools}`);
 		return parts.length > 0 ? theme.fg("dim", parts.join(" ")) : undefined;
@@ -103,26 +103,18 @@ export default function (pi: ExtensionAPI) {
 				},
 				invalidate() {},
 				render(width: number): string[] {
-					const separator = theme.fg("dim", " │ ");
+					const separator = theme.fg("dim", " · ");
 					const project = basename(ctx.cwd) || ctx.cwd;
 					const branch = footerData.getGitBranch();
 					const sessionName = pi.getSessionName();
 
-					const left = joinParts(
+					const status = joinParts(
 						[
 							theme.fg("accent", theme.bold("π")),
 							formatMode(theme),
 							formatProgress(theme),
-							theme.fg("muted", project),
-							branch ? theme.fg("dim", `git:${branch}`) : undefined,
-							sessionName ? theme.fg("dim", `#${sessionName}`) : undefined,
+							formatLocation(project, branch, sessionName, theme),
 							formatExternalStatuses(footerData, theme),
-						],
-						separator,
-					);
-
-					const right = joinParts(
-						[
 							formatModel(ctx, theme),
 							formatThinking(theme),
 							formatContext(ctx, theme),
@@ -131,7 +123,7 @@ export default function (pi: ExtensionAPI) {
 						separator,
 					);
 
-					return [placeLeftRight(left, right, width)];
+					return [width > 0 ? truncateToWidth(status, width) : ""];
 				},
 			};
 		});
@@ -216,6 +208,17 @@ function joinParts(parts: Array<string | undefined>, separator: string): string 
 	return parts.filter((part): part is string => Boolean(part)).join(separator);
 }
 
+function formatLocation(
+	project: string,
+	branch: string | null | undefined,
+	sessionName: string | null | undefined,
+	theme: ThemeLike,
+): string {
+	const branchPart = branch ? `@${branch}` : "";
+	const sessionPart = sessionName ? `#${sessionName}` : "";
+	return theme.fg("muted", `${project}${branchPart}${sessionPart}`);
+}
+
 function formatModel(ctx: ExtensionContext, theme: ThemeLike): string | undefined {
 	const model = ctx.model as { provider?: string; id?: string } | undefined;
 	if (!model?.id) return theme.fg("warning", "no model");
@@ -261,30 +264,22 @@ function formatExternalStatuses(
 	theme: ThemeLike,
 ): string | undefined {
 	const statuses = Array.from(footerData.getExtensionStatuses())
-		.filter(([key, value]) => key !== STATUS_LINE_ID && value.trim().length > 0)
-		.map(([, value]) => value);
+		.filter(([key, value]) => {
+			const text = stripAnsi(value).trim();
+			return key !== STATUS_LINE_ID && text.length > 0 && !isMcpStatus(key, text);
+		})
+		.map(([, value]) => value.trim());
 
 	if (statuses.length === 0) return undefined;
 	return theme.fg("dim", statuses.join(" "));
 }
 
-function placeLeftRight(left: string, right: string, width: number): string {
-	if (width <= 0) return "";
-	if (!right) return truncateToWidth(left, width);
+function isMcpStatus(key: string, text: string): boolean {
+	return key.toLowerCase().includes("mcp") || text.toLowerCase().startsWith("mcp");
+}
 
-	const leftWidth = visibleWidth(left);
-	const rightWidth = visibleWidth(right);
-	const gap = width - leftWidth - rightWidth;
-
-	if (gap >= 1) {
-		return truncateToWidth(left + " ".repeat(gap) + right, width);
-	}
-
-	if (width < 24) return truncateToWidth(left, width);
-
-	const rightBudget = Math.min(rightWidth, Math.max(10, Math.floor(width * 0.45)));
-	const leftBudget = Math.max(1, width - rightBudget - 1);
-	return `${truncateToWidth(left, leftBudget, "…")} ${truncateToWidth(right, rightBudget, "…")}`;
+function stripAnsi(value: string): string {
+	return value.replace(/\x1B\[[0-?]*[ -/]*[@-~]/g, "");
 }
 
 function formatCount(value: number): string {

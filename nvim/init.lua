@@ -1,3 +1,5 @@
+require('filetype')
+
 -- Some basic qol settings
 vim.o.mouse = ""
 vim.o.termguicolors = true
